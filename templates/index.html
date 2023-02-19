@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>
+            FluxAnalyzer
+        </title>
+    </head>
+    <body>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+                <img src="./static/graph_line.png" alt="Line Graph" id="line">
+                <img src="./static/graph_pie.png" alt="Pie Chart" id="pie">
+            </div>
+            <h2>
+                <h2>
+                    Consider These Phrases
+                </h2>
+                <p id="phrase">
+                    -----
+                </p>
+            </h2>
+        </div>
+        <script>
+            let get_phrase = () => {
+                const url = 'http://localhost:5000/get_phrase'
+                fetch(url, {
+                    mode: 'cors',
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(res => {
+                    res = res.phrase
+                    document.getElementById('phrase').innerHTML = res
+                })
+            }
+            setInterval(function() {
+                let gl = document.getElementById('line')
+                let gp = document.getElementById('pie')
+                gl.src = './static/graph_line.png?rand=' + Math.random()
+                gp.src = './static/graph_pie.png?rand=' + Math.random()
+                get_phrase()
+            }, 4000)
+        </script>
+    </body>
+</html>
